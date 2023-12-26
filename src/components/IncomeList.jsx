@@ -1,9 +1,21 @@
 import { formatMoney } from "../utils/format-money";
 import { useEntries } from "../hooks/useEntries";
+import { useMemo } from "react";
 
 export default function IncomeList() {
-  const { entries } = useEntries();
-  const incomeEntries = entries.filter((entry) => entry.type === "income");
+  const { entries, setEntries } = useEntries();
+  const incomeEntries = useMemo(()=> {
+      return entries.filter((entry) => entry.type === "income")
+  },[entries]);
+
+  const handleDelete = (id)=> {
+      setEntries((prev)=> {
+          const newEntries = [...prev].filter((entry)=> {
+              return id !== entry.id;
+          });
+          return newEntries;
+        })
+  }
 
   return (
     <div>
@@ -23,7 +35,7 @@ export default function IncomeList() {
                   <span className="text-green-600">
                     {formatMoney(income.value)}
                   </span>
-                  <span className="ml-2 hidden cursor-pointer font-medium text-red-500 group-hover:inline-block">
+                  <span onClick={()=>handleDelete(income.id)} className="ml-2 hidden cursor-pointer font-medium text-red-500 group-hover:inline-block">
                     Delete
                   </span>
                 </div>
