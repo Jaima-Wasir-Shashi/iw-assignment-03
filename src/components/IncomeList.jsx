@@ -17,6 +17,19 @@ export default function IncomeList() {
         })
   }
 
+  const handleEdit = (item)=> {
+      const result = window.prompt(`Enter a value for ${item.title}`,item.value);
+      const result_number = Number(result);
+      if (isNaN(result_number)) {
+        window.alert('Please enter number type value');
+        return ;
+      }
+      const item_index = [...entries].indexOf(item);
+      const new_entries = [...entries];
+      new_entries.splice(item_index,1,{...item,value:result_number});
+      setEntries(new_entries);
+  }
+
   return (
     <div>
       <h2 className="border-b pb-2 font-medium text-green-600">Income</h2>
@@ -34,6 +47,9 @@ export default function IncomeList() {
                 <div>
                   <span className="text-green-600">
                     {formatMoney(income.value)}
+                  </span>
+                  <span onClick={()=>handleEdit(income)} className="ml-2 hidden cursor-pointer font-medium text-red-500 group-hover:inline-block">
+                    Edit
                   </span>
                   <span onClick={()=>handleDelete(income.id)} className="ml-2 hidden cursor-pointer font-medium text-red-500 group-hover:inline-block">
                     Delete

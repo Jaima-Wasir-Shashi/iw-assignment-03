@@ -9,24 +9,40 @@ export default function AddEntry() {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log("submitted");
+    if (!title) {
+      window.alert('Title is required');
+      return ;
+    }
+    if (!value) {
+      window.alert('Value is required');
+      return ;
+    }
+    setEntries([
+      ...entries,
+      {
+        id: uuidv4(),
+        title: title,
+        value: parseFloat(value),
+        type: type,
+      },
+    ]);
+
+
+    setTitle("");
+    setValue("");
+  }
+
+
   return (
     <div className="border-b bg-gray-100 py-3">
       <div className="mx-auto max-w-xl px-5">
         <form
           className="flex gap-2"
-          onSubmit={(e) => {
-            e.preventDefault();
-            console.log("submitted");
-            setEntries([
-              ...entries,
-              {
-                id: uuidv4(),
-                title: title,
-                value: parseFloat(value),
-                type: type,
-              },
-            ]);
-          }}
+          onSubmit={handleSubmit}
         >
           <select
             id="type"

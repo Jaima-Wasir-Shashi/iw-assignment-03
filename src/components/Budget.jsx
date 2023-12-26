@@ -7,7 +7,7 @@ export default function Budget() {
     <div className="mx-auto max-w-sm px-5 py-8 text-center text-white">
       <div>
         <h2>Available Budget</h2>
-        <p className="mt-1 text-4xl font-medium">+ BDT {formatMoney(totalIncome - totalExpense)}</p>
+        <p className="mt-1 text-4xl font-medium">{totalIncome>=totalExpense?"+":"-"} BDT {formatMoney(totalIncome - totalExpense)}</p>
       </div>
 
       <div className="mt-4 flex items-center justify-between bg-green-500 px-4 py-3 text-sm">
